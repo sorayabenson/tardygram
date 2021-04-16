@@ -7,33 +7,34 @@ const User = require('../lib/models/User');
 jest.mock('../lib/middleware/ensureAuth.js', () => (req, res, next) => {
   req.user = {
     userName: 'testUser',
-    photoUrl: 'testUserPhoto.com'
+    photoUrl: 'testUserPhoto.com',
   };
 
   next();
-})
+});
 
 describe('posts routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
 
-  let users;
-  beforeAll(async done => {
+  // let users;
+  // beforeEach(async (done) => {
+   
+
+  //   return done;
+  // });
+
+  it('posts a new tardypost', async () => {
     const profile = {
       userName: 'testUser',
-      photoUrl: 'testUserPhoto.com'
-    }
-    users = await User.insert(profile);
-    
-    return done;
-  })
-
-  it('posts a new tardypost', () => {
+      photoUrl: 'testUserPhoto.com',
+    };
+    await User.insert(profile);
     const newPost = {
-      photo_url: 'testphoto.com',
-      caption: 'this is a test'
-    }
+      photoUrl: 'testphoto.com',
+      caption: 'this is a test',
+    };
 
     return request(app)
       .post('/api/v1/posts')
@@ -42,9 +43,9 @@ describe('posts routes', () => {
         expect(res.body).toEqual({
           ...newPost,
           id: '1',
-          user_name: 'testUser'
-        })
-      })
-  })
-
+          userName: 'testUser',
+          tags: null,
+        });
+      });
+  });
 });
