@@ -69,4 +69,38 @@ describe('posts routes', () => {
       })
     })
   })
+
+  it('updates the caption of a post', () => {
+    const updatedCaption = {
+      caption: 'this is the updated caption'
+    };
+
+    return request(app)
+      .patch('/api/v1/posts/1')
+      .send(updatedCaption)
+      .then((res) => {
+        expect(res.body).toEqual({
+          photoUrl: 'testphoto.com',
+          caption: 'this is the updated caption',
+          userName: 'testUser',
+          tags: null,
+          id: '1',
+        })
+      })
+  })
+
+  it('deletes the post with the corresponding id', () => {
+    return request(app)
+      .delete('/api/v1/posts/1')
+      .then((res) => {
+        expect(res.body).toEqual({
+          photoUrl: 'testphoto.com',
+          caption: 'this is a test',
+          userName: 'testUser',
+          tags: null,
+          id: '1',
+        })
+        expect(res.status).toEqual(200)
+      })
+  })
 });
