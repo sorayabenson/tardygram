@@ -3,6 +3,7 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 const User = require('../lib/models/User');
+const seed = require('../data/seed');
 
 jest.mock('../lib/middleware/ensureAuth.js', () => (req, res, next) => {
   req.user = {
@@ -18,19 +19,11 @@ describe('posts routes', () => {
     return setup(pool);
   });
 
-  // let users;
-  // beforeEach(async (done) => {
-   
+  beforeEach(() => {
+    return seed();
+  });
 
-  //   return done;
-  // });
-
-  it('posts a new tardypost', async () => {
-    const profile = {
-      userName: 'testUser',
-      photoUrl: 'testUserPhoto.com',
-    };
-    await User.insert(profile);
+  it('posts a new tardypost', () => {
     const newPost = {
       photoUrl: 'testphoto.com',
       caption: 'this is a test',
@@ -42,10 +35,38 @@ describe('posts routes', () => {
       .then((res) => {
         expect(res.body).toEqual({
           ...newPost,
-          id: '1',
+          id: '2',
           userName: 'testUser',
           tags: null,
         });
       });
   });
+
+  it('returns all posts by a user', () => {
+    return request(app)
+    .get('/api/v1/posts/testUser')
+    .then((res) => {
+      expect(res.body).toEqual([{
+        photoUrl: 'testphoto.com',
+        caption: 'this is a test',
+        userName: 'testUser',
+        tags: null,
+        id: '1',
+      }])
+    })
+  })
+
+  it('return a single post by its id', () => {
+    return request(app)
+    .get('/api/v1/posts/testUser/1')
+    .then((res) => {
+      expect(res.body).toEqual({
+        photoUrl: 'testphoto.com',
+        caption: 'this is a test',
+        userName: 'testUser',
+        tags: null,
+        id: '1',
+      })
+    })
+  })
 });
