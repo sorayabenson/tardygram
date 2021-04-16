@@ -88,4 +88,19 @@ describe('posts routes', () => {
         })
       })
   })
+
+  it('deletes the post with the corresponding id', () => {
+    return request(app)
+      .delete('/api/v1/posts/1')
+      .then((res) => {
+        expect(res.body).toEqual({
+          photoUrl: 'testphoto.com',
+          caption: 'this is a test',
+          userName: 'testUser',
+          tags: null,
+          id: '1',
+        })
+        expect(res.status).toEqual(200)
+      })
+  })
 });
