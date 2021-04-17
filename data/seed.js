@@ -1,5 +1,6 @@
 const User = require('../lib/models/User');
 const Post = require('../lib/models/Post');
+const Comment = require('../lib/models/Comment');
 
 module.exports = async () => {
   const profile = {
@@ -15,4 +16,12 @@ module.exports = async () => {
   };
 
   const posts = await Post.insert(post);
+  
+  const comment = {
+        comment: 'this is a comment!!',
+        userName: 'testUser'
+      
+  }
+
+  const comments = await Comment.insert(comment, 1);
 };

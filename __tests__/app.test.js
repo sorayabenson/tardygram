@@ -104,3 +104,29 @@ describe('posts routes', () => {
       })
   })
 });
+
+describe('comments routes', () => {
+  beforeEach(() => {
+    return setup(pool);
+  });
+  beforeEach(() => {
+    return seed();
+  });
+
+  it('post route for comments', () => {
+    const comment = {
+      comment: 'this is a comment!!'
+    }
+    return request(app) 
+    .post('/api/v1/comments/testUser/1')
+    .send(comment)
+    .then((res) => {
+      expect(res.body).toEqual({
+        id: '2',
+        comment: 'this is a comment!!',
+        post: '1',
+        commentBy: 'testUser'
+      })
+    })
+  })
+});
