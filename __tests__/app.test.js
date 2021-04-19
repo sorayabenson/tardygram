@@ -35,7 +35,7 @@ describe('posts routes', () => {
       .then((res) => {
         expect(res.body).toEqual({
           ...newPost,
-          id: '2',
+          id: '3',
           userName: 'testUser',
           tags: null,
         });
@@ -122,7 +122,7 @@ describe('comments routes', () => {
       comment: 'this is a comment!!',
     };
     return request(app)
-      .post('/api/v1/comments/testUser/1')
+      .post('/api/v1/comments/1')
       .send(comment)
       .then((res) => {
         expect(res.body).toEqual({
