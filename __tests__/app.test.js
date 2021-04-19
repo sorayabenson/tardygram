@@ -66,6 +66,8 @@ describe('posts routes', () => {
         userName: 'testUser',
         tags: null,
         id: '1',
+        comment: 'this is a comment!!',
+        commentBy: 'testUser',
       })
     })
   })
@@ -104,7 +106,6 @@ describe('posts routes', () => {
       })
   })
 });
-
 
 describe('comments routes', () => {
   beforeEach(() => {

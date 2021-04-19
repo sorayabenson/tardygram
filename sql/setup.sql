@@ -1,7 +1,5 @@
 DROP TABLE IF EXISTS users, posts, comments CASCADE;
 
--- Figure out how to delete a post that has a comment with cascade??
-
 CREATE TABLE users (
     github_username TEXT NOT NULL PRIMARY KEY,
     github_photo_url TEXT NOT NULL
