@@ -6,6 +6,7 @@ CREATE TABLE users (
     github_username TEXT NOT NULL PRIMARY KEY,
     github_photo_url TEXT NOT NULL
 );
+
 CREATE TABLE posts (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     user_name TEXT NOT NULL REFERENCES users(github_username),
@@ -17,6 +18,6 @@ CREATE TABLE posts (
 CREATE TABLE comments (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     comment_by TEXT NOT NULL REFERENCES users(github_username),
-    post BIGINT NOT NULL REFERENCES posts(id),
+    post BIGINT NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
     comment TEXT NOT NULL
 )
