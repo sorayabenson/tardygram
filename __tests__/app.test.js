@@ -35,7 +35,7 @@ describe('posts routes', () => {
       .then((res) => {
         expect(res.body).toEqual({
           ...newPost,
-          id: '3',
+          id: '23',
           userName: 'testUser',
           tags: null,
         });
@@ -53,6 +53,20 @@ describe('posts routes', () => {
             userName: 'testUser',
             tags: null,
             id: '1',
+          },
+          {
+            photoUrl: 'test2photo.com',
+            caption: 'this is a test',
+            userName: 'testUser',
+            tags: null,
+            id: '2'
+          },
+          {
+            photoUrl: 'test3photo.com',
+            caption: 'this is a test',
+            userName: 'testUser',
+            tags: null,
+            id: '3'
           },
         ]);
       });
@@ -140,6 +154,75 @@ describe('comments routes', () => {
       .then((res) => {
         expect(res.body).toEqual({ success: 'comment deleted' });
         expect(res.status).toEqual(200);
+      });
+  });
+});
+
+describe('users routes', () => {
+  beforeEach(() => {
+    return setup(pool);
+  });
+  beforeEach(() => {
+    return seed();
+  });
+
+
+  it('get prolific users route', () => {
+    return request(app)
+      .get('/api/v1/users/prolific')
+      .then((res) => {
+        expect(res.body).toEqual([
+          {
+            userName: 'testUser',
+            photoUrl: 'testUserPhoto.com',
+            count: '3'
+          },
+          {
+            userName: 'eightUser',
+            photoUrl: 'eightUserPhoto.com',
+            count: '2'
+          },
+          {
+            userName: 'thirdUser',
+            photoUrl: 'thirdUserPhoto.com',
+            count: '2'
+          },
+          {
+            userName: 'tenthUser',
+            photoUrl: 'tenthUserPhoto.com',
+            count: '2'
+          },
+          {
+            userName: 'fourthUser',
+            photoUrl: 'fourthUserPhoto.com',
+            count: '2'
+          },
+          {
+            userName: 'ninthUser',
+            photoUrl: 'ninthUserPhoto.com',
+            count: '2'
+          },
+          {
+            userName: 'anotherUser',
+            photoUrl: 'anotherUserPhoto.com',
+            count: '2'
+          },
+          {
+            userName: 'fifthUser',
+            photoUrl: 'fifthUserPhoto.com',
+            count: '2'
+          },
+          {
+            userName: 'sixthUser',
+            photoUrl: 'sixthUserPhoto.com',
+            count: '2'
+          },
+          {
+            userName: 'seventhUser',
+            photoUrl: 'seventhUserPhoto.com',
+            count: '2'
+          },
+        ]);
       });
   });
 });
