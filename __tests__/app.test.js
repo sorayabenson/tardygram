@@ -44,37 +44,39 @@ describe('posts routes', () => {
 
   it('returns all posts by a user', () => {
     return request(app)
-    .get('/api/v1/posts/testUser')
-    .then((res) => {
-      expect(res.body).toEqual([{
-        photoUrl: 'testphoto.com',
-        caption: 'this is a test',
-        userName: 'testUser',
-        tags: null,
-        id: '1',
-      }])
-    })
-  })
+      .get('/api/v1/posts/testUser')
+      .then((res) => {
+        expect(res.body).toEqual([
+          {
+            photoUrl: 'testphoto.com',
+            caption: 'this is a test',
+            userName: 'testUser',
+            tags: null,
+            id: '1',
+          },
+        ]);
+      });
+  });
 
   it('return a single post by its id', () => {
     return request(app)
-    .get('/api/v1/posts/testUser/1')
-    .then((res) => {
-      expect(res.body).toEqual({
-        photoUrl: 'testphoto.com',
-        caption: 'this is a test',
-        userName: 'testUser',
-        tags: null,
-        id: '1',
-        comment: 'this is a comment!!',
-        commentBy: 'testUser',
-      })
-    })
-  })
+      .get('/api/v1/posts/testUser/1')
+      .then((res) => {
+        expect(res.body).toEqual({
+          photoUrl: 'testphoto.com',
+          caption: 'this is a test',
+          userName: 'testUser',
+          tags: null,
+          id: '1',
+          comment: 'this is a comment!!',
+          commentBy: 'testUser',
+        });
+      });
+  });
 
   it('updates the caption of a post', () => {
     const updatedCaption = {
-      caption: 'this is the updated caption'
+      caption: 'this is the updated caption',
     };
 
     return request(app)
@@ -87,9 +89,9 @@ describe('posts routes', () => {
           userName: 'testUser',
           tags: null,
           id: '1',
-        })
-      })
-  })
+        });
+      });
+  });
 
   it('deletes the post with the corresponding id', () => {
     return request(app)
@@ -101,10 +103,10 @@ describe('posts routes', () => {
           userName: 'testUser',
           tags: null,
           id: '1',
-        })
-        expect(res.status).toEqual(200)
-      })
-  })
+        });
+        expect(res.status).toEqual(200);
+      });
+  });
 });
 
 describe('comments routes', () => {
@@ -117,18 +119,27 @@ describe('comments routes', () => {
 
   it('post route for comments', () => {
     const comment = {
-      comment: 'this is a comment!!'
-    }
-    return request(app) 
-    .post('/api/v1/comments/testUser/1')
-    .send(comment)
-    .then((res) => {
-      expect(res.body).toEqual({
-        id: '2',
-        comment: 'this is a comment!!',
-        post: '1',
-        commentBy: 'testUser'
-      })
-    })
-  })
+      comment: 'this is a comment!!',
+    };
+    return request(app)
+      .post('/api/v1/comments/testUser/1')
+      .send(comment)
+      .then((res) => {
+        expect(res.body).toEqual({
+          id: '2',
+          comment: 'this is a comment!!',
+          post: '1',
+          commentBy: 'testUser',
+        });
+      });
+  });
+
+  it('deletes a comment with the corresponding id', () => {
+    return request(app)
+      .delete('/api/v1/comments/1')
+      .then((res) => {
+        expect(res.body).toEqual({ success: 'comment deleted' });
+        expect(res.status).toEqual(200);
+      });
+  });
 });
